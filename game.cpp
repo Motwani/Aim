@@ -30,6 +30,11 @@ float bully;
 float v = 20;
 float vx,vy;
 int bul_move = 0;
+float canon_move = 0;
+float barr1_dir = 1;
+float barr2_dir = -1;
+float barr1_y = 0;
+float barr2_y = 0;
 
 vector <obstacle> obstacle_list;
 /* Executed when a regular key is pressed/released/held-down */
@@ -105,6 +110,7 @@ void initGL (GLFWwindow* window, int width, int height)
   createRoller();
   createBullet();
   createBase();
+  createBarrier();
 
 	// Create and compile our GLSL program from the shaders
 	programID = LoadShaders( "Sample_GL.vert", "Sample_GL.frag" );
@@ -157,7 +163,7 @@ int main (int argc, char** argv)
         if ((current_time - last_update_time) >= 2) { // atleast 0.5s elapsed since last frame
             float radius = rand()%6 + 2; //range is 2 to 7
             float theta = (rand()%41 - 20)*M_PI/180; // range is -20 to 20
-            float velocity = rand()%19 + 15; // range is 15 to 33
+            float velocity = rand()%17 + 17; // range is 17 to 33
             float velocity_x = velocity * sin(-1*theta);
             float velocity_y = velocity * cos(theta);
             //cout<<"$$$"<<rand()<<endl;
@@ -165,7 +171,7 @@ int main (int argc, char** argv)
             obstacle o = createObstacle(radius);
             o.vx = velocity_x;
             o.vy = velocity_y;
-            o.x = 14;
+            o.x = 26;
             o.y = -20;
             o.move = 1;
             o.i = 0;

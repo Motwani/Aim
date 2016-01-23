@@ -22,6 +22,14 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
             case GLFW_KEY_SPACE:
                 bul_move = 1;
                 break;
+            case GLFW_KEY_W:
+              if(canon_move <= 58)
+                canon_move += 1;
+                break;
+            case GLFW_KEY_S:
+              if(canon_move >= 1)
+                canon_move -= 1;
+                break;
             default:
                 break;
         }

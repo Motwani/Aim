@@ -1,4 +1,4 @@
-VAO *triangle, *rectangle, *tri,*rect, *canon,*roller,*base;
+VAO *triangle, *rectangle, *tri,*rect, *canon,*roller,*base,*bar,*barrier1,*barrier2;
 
 // Creates the triangle object used in this sample code
 void createTriangle ()
@@ -7,9 +7,9 @@ void createTriangle ()
 
   /* Define vertex array as used in glBegin (GL_TRIANGLES) */
   static const GLfloat vertex_buffer_data [] = {
-    0, -36,0, // vertex 0
-    12,-36,0, // vertex 1
-    12,-30,0, // vertex 2
+    -2, -36,0, // vertex 0
+    10,-36,0, // vertex 1
+    10,-26,0, // vertex 2
   };
 
   static const GLfloat color_buffer_data [] = {
@@ -19,14 +19,14 @@ void createTriangle ()
   };
 
   static const GLfloat vert [] = {
-	  20,0,0,
-	  -20,-20,0,
-	  20,-30,0,
+	  48,-36,0,
+	  48,-26,0,
+	  60,-36,0,
   };
 
   // create3DObject creates and returns a handle to a VAO that can be used later
   triangle = create3DObject(GL_TRIANGLES, 3, vertex_buffer_data, color_buffer_data, GL_FILL);
-  tri = create3DObject(GL_TRIANGLES, 3 , vert, color_buffer_data, GL_LINE);
+  tri = create3DObject(GL_TRIANGLES, 3 , vert, color_buffer_data, GL_FILL);
 }
 
 obstacle createObstacle(float radius){
@@ -177,6 +177,16 @@ void createBase ()
     70,-37,0, // vertex 4
     -70,-37,0,  // vertex 1
   };
+  static const GLfloat vertex2_buffer_data [] = {
+    10,-26,0, // vertex 1
+    48,-26,0, // vertex 2
+    10,-27,0, // vertex 3
+
+    10,-27,0, // vertex 3
+    48,-26,0, // vertex 4
+    48,-27,0,  // vertex 1
+  };
+
 
   static const GLfloat color_buffer_data [] = {
     0.5,0.64,0.58, // color 1
@@ -190,6 +200,7 @@ void createBase ()
 
   // create3DObject creates and returns a handle to a VAO that can be used later
   base = create3DObject(GL_TRIANGLES, 6, vertex_buffer_data, color_buffer_data, GL_FILL);
+  bar = create3DObject(GL_TRIANGLES, 6, vertex2_buffer_data, color_buffer_data, GL_FILL);
 }
 
 void createCanon ()
@@ -217,4 +228,40 @@ void createCanon ()
 
   // create3DObject creates and returns a handle to a VAO that can be used later
   canon = create3DObject(GL_TRIANGLES, 6, vertex_buffer_data, color_buffer_data, GL_FILL);
+}
+void createBarrier ()
+{
+  // GL3 accepts only Triangles. Quads are not supported
+  static const GLfloat vertex_buffer_data [] = {
+     -15,8,0, // vertex 1
+     -15,-8,0, // vertex 2
+    -17,-8,0, // vertex 3
+
+    -17,-8,0, // vertex 3
+    -17,8,0, // vertex 4
+     -15,8,0,  // vertex 1
+  };
+  static const GLfloat vertex2_buffer_data [] = {
+     -26,16,0, // vertex 1
+     -26,0,0, // vertex 2
+    -28,0,0, // vertex 3
+
+    -28,0,0, // vertex 3
+    -28,16,0, // vertex 4
+     -26,16,0,  // vertex 1
+  };
+
+  static const GLfloat color_buffer_data [] = {
+    0.5,0.64,0.58, // color 1
+    0.5,0.64,0.58, // color 2
+    0.5,0.64,0.58, // color 3
+
+    0.5,0.64,0.58, // color 3
+    0.5,0.64,0.58, // color 4
+    0.5,0.64,0.58,  // color 1
+  };
+
+  // create3DObject creates and returns a handle to a VAO that can be used later
+  barrier1 = create3DObject(GL_TRIANGLES, 6, vertex_buffer_data, color_buffer_data, GL_FILL);
+  barrier2 = create3DObject(GL_TRIANGLES, 6, vertex2_buffer_data, color_buffer_data, GL_FILL);
 }

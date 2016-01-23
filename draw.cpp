@@ -6,10 +6,53 @@ void move_block(glm::mat4 MVP, glm::mat4 VP)
   glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
   draw3DObject(rectangle);
 }
+void move_barriers(glm::mat4 MVP, glm::mat4 VP)
+{
+  if(barr1_dir == 1)
+  {
+    if(barr1_y <= 32)
+      barr1_y += 0.05;
+    else
+      barr1_dir = -1;
+  }
+  else
+  {
+    if(barr1_y >= -29)
+      barr1_y -= 0.05;
+    else
+      barr1_dir = 1;
+  }
+  glm::mat4 translateRectangle = glm::translate (glm::vec3(0.0f, barr1_y, 0.0f));        // glTranslatef
+  Matrices.model = (translateRectangle);
+  MVP = VP * Matrices.model;
+  glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
+  draw3DObject(barrier1);
+  // barr1_top += barr1_y;
+  // barr1_bot += barr1_y;
+  if(barr2_dir == 1)
+  {
+    if(barr2_y <= 24)
+      barr2_y += 0.1;
+    else
+      barr2_dir = -1;
+  }
+  else
+  {
+    if(barr2_y >= -37)
+      barr2_y -= 0.1;
+    else
+      barr2_dir = 1;
+  }
+  translateRectangle = glm::translate (glm::vec3(0.0f, barr2_y, 0.0f));        // glTranslatef
+  Matrices.model = (translateRectangle);
+  MVP = VP * Matrices.model;
+  glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
+  draw3DObject(barrier2);
+}
 
 void move_roller( glm::mat4 MVP , glm::mat4 VP)
 {
-  glm::mat4 translateCircle = glm::translate (glm::vec3(-60.0f,-30.0f,0.0f));
+  glm::mat4 translateCircle = glm::translate (glm::vec3(-60.0f,-30.0f+canon_move,0.0f));
   Matrices.model = translateCircle;
   MVP = VP * Matrices.model;
   glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
@@ -40,7 +83,7 @@ obstacle move_obstacle(glm::mat4 MVP , glm::mat4 VP, obstacle obs)
 
 void move_canon(glm::mat4 MVP , glm::mat4 VP)
 {
-  glm::mat4 translateRectangle = glm::translate (glm::vec3(-60.0f, -30.0f, 0.0f));        // glTranslatef
+  glm::mat4 translateRectangle = glm::translate (glm::vec3(-60.0f, -30.0f+canon_move, 0.0f));        // glTranslatef
   glm::mat4 rotateRectangle = glm::rotate((float)(rectangle_rotation*M_PI/180.0f), glm::vec3(0,0,1)); // rotate about vector (-1,1,1)
   Matrices.model = (translateRectangle * rotateRectangle);
   MVP = VP * Matrices.model;
@@ -91,8 +134,11 @@ void draw ()
    glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
   // MVP = VP * Matrices.model; // MVP = p * V * M
+     draw3DObject(tri);
      draw3DObject(triangle);
      draw3DObject(base);
+     draw3DObject(bar);
+    //  draw3DObject(barrier1);
   //  Don't change unless you are sure!!
   glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
@@ -163,6 +209,7 @@ void draw ()
   //
      move_roller(MVP,VP);
      move_canon(MVP,VP);
+     move_barriers(MVP,VP);
 
 
 
@@ -177,10 +224,23 @@ void draw ()
       }
       else{
         bullx = float(8*sin(float(-1*rectangle_rotation*M_PI/180.0f))-60.0f);
-        bully = float(8*cos(float(rectangle_rotation*M_PI/180.0f))-30.0f);
+        bully = float(8*cos(float(rectangle_rotation*M_PI/180.0f))-30.0f+canon_move);
         vx =  v * sin(-1* rectangle_rotation*M_PI/180.0f);
         vy = v * cos(rectangle_rotation*M_PI/180.0f);
       }
+      if(bullx >= -17 && bullx <= -15)
+      {
+        // cout<<"HERE"<<endl;
+        if(bully <= 8+barr1_y && bully >= -10+barr1_y)
+          vx = -1*vx;
+      }
+      if(bullx >= -28 && bullx <= -26)
+      {
+        // cout<<"HERE"<<endl;
+        if(bully <= 16+barr2_y && bully >= -2+barr2_y)
+          vx = -1*vx;
+      }
+
       move_bullet(MVP,VP);
   //
   // move_bullet(MVP,VP);
