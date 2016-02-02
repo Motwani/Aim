@@ -1,0 +1,34 @@
+2-D Game AIM by Aditya Motwani
+
+Roll No 201401206
+
+Basic Controls
+
+W key - Move Canon Up
+S key - Move Canon Down
+Right Arrow Key - Move Gun Barrel Up
+Left Arrow Key - Move Gun Barrel Down
+Up Arrow Key - Increase Velocity of Bullet
+Down Arrow Key - Decrease Velocity of Bullet
+Space Key - Shoot Bullet
+Q Key - Quit Game
+
+Game Description
+
+The Game is an endless game with target shots on the right side and canon on the left. The bullet is spawns a different color on every game run.
+
+The Targets themselves have different shapes and sizes and are spawned after an interval of time.
+
+Collisions between the targets are implemented such that when they overlap the merge into a bigger target.
+
+There are two barriers that bock the bullet from the targets and reflect the ball back.
+
+Score keeping has not been implemented but the code is present in the game. The display was to be build using a seven segment display.
+
+Collisions, Gravity , Projectile Motion are implemented.
+
+Makefile has been included in the source. The command to run is
+
+g++ -o Aim game.cpp glad.c -lGL -lglfw -L/usr/local/lib -ldl
+
+The output file is Aim

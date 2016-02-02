@@ -200,7 +200,10 @@ void draw ()
     float sum = rad + obstacle_list[i].radius;
     float dist = sqrt(pow(bullx - obstacle_list[i].x,2) + pow(bully - obstacle_list[i].y,2));
     if (dist < sum)
+    {
+      score += obstacle_list[i].radius;
       obstacle_list.erase(obstacle_list.begin()+i);
+    }
     //cout<<i<<"**"<<obstacle_list[i].move<<endl;
     obstacle_list[i]=move_obstacle(MVP,VP,obstacle_list[i]);
   }

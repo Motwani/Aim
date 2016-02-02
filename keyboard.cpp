@@ -30,6 +30,23 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
               if(canon_move >= 1)
                 canon_move -= 1;
                 break;
+            case GLFW_KEY_K:
+                if(pane <= 5)
+                  pane += 0.5;
+                  Matrices.projection = glm::ortho(factor*(-70.0f + pane),factor*( 70.0f + pane), -40.0f, 40.0f, 0.1f, 500.0f);
+                break;
+            case GLFW_KEY_J:
+                if(pane >= -5)
+                  pane -= 0.5;
+                  Matrices.projection = glm::ortho(factor*(-70.0f + pane),factor*( 70.0f + pane), -40.0f, 40.0f, 0.1f, 500.0f);
+                break;
+            case GLFW_KEY_Z:
+                if(check == -1)
+                {
+                  check = 0;
+                  zoom = 1 - zoom;
+                }
+                break;
             default:
                 break;
         }
@@ -105,5 +122,5 @@ void reshapeWindow (GLFWwindow* window, int width, int height)
     // Matrices.projection = glm::perspective (fov, (GLfloat) fbwidth / (GLfloat) fbheight, 0.1f, 500.0f);
 
     // Ortho projection for 2D views
-    Matrices.projection = glm::ortho(-70.0f, 70.0f, -40.0f, 40.0f, 0.1f, 500.0f);
+    Matrices.projection = glm::ortho(-70.0f + pane, 70.0f + pane, -40.0f, 40.0f, 0.1f, 500.0f);
 }

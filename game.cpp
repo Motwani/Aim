@@ -27,7 +27,7 @@ bool triangle_rot_status = true;
 bool rectangle_rot_status = false;
 float bullx;
 float bully;
-float v = 20;
+float v = 26;
 float vx,vy;
 int bul_move = 0;
 float canon_move = 0;
@@ -35,7 +35,11 @@ float barr1_dir = 1;
 float barr2_dir = -1;
 float barr1_y = 0;
 float barr2_y = 0;
-
+float pane = 0;
+float factor = 1;
+int zoom = 0;
+int check = -1;
+int score = 0;
 vector <obstacle> obstacle_list;
 /* Executed when a regular key is pressed/released/held-down */
 /* Prefered for Keyboard events */
@@ -151,13 +155,28 @@ int main (int argc, char** argv)
 
         // OpenGL Draw commands
         draw();
+        if(check == 0){
+        if(zoom == 1)
+        {
+          factor -= 0.01;
+          if(factor <= 0.5)
+            check = -1;
+        }
+        if(zoom == 0)
+        {
+          factor += 0.01;
+          if (factor >= 1)
+            check = -1;
+        }
+        Matrices.projection = glm::ortho(factor*(-70.0f + pane),factor*(70.0f + pane), -40.0f, 40.0f, 0.1f, 500.0f);
 
+      }
         // Swap Frame Buffer in double buffering
         glfwSwapBuffers(window);
 
         // Poll for Keyboard and mouse events
         glfwPollEvents();
-
+        printf("%d\r",score);
         // Control based on time (Time based transformation like 5 degrees rotation every 0.5s)
         current_time = glfwGetTime(); // Time in seconds
         if ((current_time - last_update_time) >= 2) { // atleast 0.5s elapsed since last frame
